@@ -1,0 +1,29 @@
+scrape_configs:
+  - job_name: ${PROMTAIL_JOB}
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: ${PROMTAIL_JOB}
+          host: ${PROMTAIL_HOST}
+          __path__: /application/Data/Logs/*.log
+
+server:
+  http_listen_port: 0
+  grpc_listen_port: 0
+
+positions:
+  filename: ${PROMTAIL_TMP_PATH}/positions.yaml
+
+clients:
+  - url: ${PROMTAIL_CLIENT_URL}
+    batchwait: 1s
+    batchsize: 1048576
+    follow_redirects: false
+    backoff_config:
+      min_period: 500ms
+      max_period: 5m0s
+      max_retries: 10
+    timeout: 10s
+    tenant_id: ""
+    stream_lag_labels: filename
