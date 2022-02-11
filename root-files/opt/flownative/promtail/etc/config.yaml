@@ -1,11 +1,11 @@
 scrape_configs:
-  - job_name: ${PROMTAIL_JOB}
+  - job_name: default
     static_configs:
       - targets:
           - localhost
         labels:
-          job: ${PROMTAIL_JOB}
-          host: ${PROMTAIL_HOST}
+          job: ${PROMTAIL_LABEL_JOB}
+          host: ${PROMTAIL_LABEL_HOST}
           __path__: /application/Data/Logs/*.log
 
 server:
@@ -25,5 +25,5 @@ clients:
       max_period: 5m0s
       max_retries: 10
     timeout: 10s
-    tenant_id: ""
+    tenant_id: ${PROMTAIL_CLIENT_TENANT_ID}
     stream_lag_labels: filename

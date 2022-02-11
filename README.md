@@ -12,8 +12,6 @@ controlled through environment variables.
 
 ## Sending logs from Local Beach
 
-TODO
-
 ```yaml
   addon-promtail:
     image: flownative/promtail
@@ -24,9 +22,18 @@ TODO
       - ./Data/Logs:/application/Data/Logs:delegated
     environment:
       - PROMTAIL_CLIENT_URL=http://loki_loki_1:3100/loki/api/v1/push
-      - PROMTAIL_JOB=localbeach-flow
-      - PROMTAIL_HOST=localbeach-${BEACH_PROJECT_NAME}
+      - PROMTAIL_LABEL_JOB=localbeach-flow
+      - PROMTAIL_LABEL_HOST=localbeach-${BEACH_PROJECT_NAME}
 ```
+
+### Environment variables
+
+| Variable Name             | Type   | Default                                  | Description                                                 |
+| ------------------------- | ------ | ---------------------------------------- | ----------------------------------------------------------- |
+| PROMTAIL_CLIENT_URL       | string | http://loki_loki_1:3100/loki/api/v1/push | URL pointing to the Loki push endpoint                      |
+| PROMTAIL_LABEL_HOST       | string | $(hostname)                              | Value of the label "host" which is added to all log entries |
+| PROMTAIL_LABEL_JOB        | string | beach                                    | Value of the label "job" which is added to all log entries  |
+| PROMTAIL_CLIENT_TENANT_ID | string |                                          | An optional tenant id to sent as the `X-Scope-OrgID`-header |
 
 ## Security aspects
 
