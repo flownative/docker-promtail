@@ -12,7 +12,6 @@ mkdir -p \
     "${PROMTAIL_BASE_PATH}/bin" \
     "${PROMTAIL_BASE_PATH}/tmp"
 
-mv /etc/promtail/* "${PROMTAIL_BASE_PATH}/etc/"
 mv /usr/bin/promtail "${PROMTAIL_BASE_PATH}/bin/"
 
 chown -R promtail:promtail "${PROMTAIL_BASE_PATH}"

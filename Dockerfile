@@ -16,7 +16,6 @@ USER root
 
 COPY root-files /
 COPY --from=promtail /usr/bin/promtail /usr/bin/promtail
-COPY --from=promtail /etc/promtail /etc/promtail
 RUN /build.sh
 
 USER promtail
