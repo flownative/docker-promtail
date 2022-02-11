@@ -27,3 +27,7 @@ clients:
     timeout: 10s
     tenant_id: ${PROMTAIL_CLIENT_TENANT_ID}
     stream_lag_labels: filename
+
+basic_auth:
+  username: ${PROMTAIL_BASIC_AUTH_USERNAME}
+  password: ${PROMTAIL_BASIC_AUTH_PASSWORD}

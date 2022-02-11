@@ -28,12 +28,14 @@ controlled through environment variables.
 
 ### Environment variables
 
-| Variable Name             | Type   | Default                                  | Description                                                 |
-| ------------------------- | ------ | ---------------------------------------- | ----------------------------------------------------------- |
-| PROMTAIL_CLIENT_URL       | string | http://loki_loki_1:3100/loki/api/v1/push | URL pointing to the Loki push endpoint                      |
-| PROMTAIL_LABEL_HOST       | string | $(hostname)                              | Value of the label "host" which is added to all log entries |
-| PROMTAIL_LABEL_JOB        | string | beach                                    | Value of the label "job" which is added to all log entries  |
-| PROMTAIL_CLIENT_TENANT_ID | string |                                          | An optional tenant id to sent as the `X-Scope-OrgID`-header |
+| Variable Name                | Type   | Default                                  | Description                                                 |
+| ---------------------------- | ------ | ---------------------------------------- | ----------------------------------------------------------- |
+| PROMTAIL_CLIENT_URL          | string | http://loki_loki_1:3100/loki/api/v1/push | URL pointing to the Loki push endpoint                      |
+| PROMTAIL_LABEL_HOST          | string | $(hostname)                              | Value of the label "host" which is added to all log entries |
+| PROMTAIL_LABEL_JOB           | string | beach                                    | Value of the label "job" which is added to all log entries  |
+| PROMTAIL_CLIENT_TENANT_ID    | string |                                          | An optional tenant id to sent as the `X-Scope-OrgID`-header |
+| PROMTAIL_BASIC_AUTH_USERNAME | string |                                          | Username to use for basic auth, if required by Loki         |
+| PROMTAIL_BASIC_AUTH_PASSWORD | string |                                          | Password to use for basic auth, if required by Loki         |
 
 ## Security aspects
 
