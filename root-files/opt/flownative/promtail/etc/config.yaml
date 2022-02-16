@@ -11,8 +11,7 @@ scrape_configs:
           __path__: /application/Data/Logs/*.log
 
 server:
-  http_listen_port: 0
-  grpc_listen_port: 0
+  disable: true
 
 positions:
   filename: ${PROMTAIL_TMP_PATH}/positions.yaml
