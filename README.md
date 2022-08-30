@@ -1,7 +1,6 @@
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 [![Maintenance level: Love](https://img.shields.io/badge/maintenance-%E2%99%A1%E2%99%A1%E2%99%A1-ff69b4.svg)](https://www.flownative.com/en/products/open-source.html)
-![Nightly Builds](https://github.com/flownative/docker-promtail/workflows/Nightly%20Builds/badge.svg)
-![Release to Docker Registries](https://github.com/flownative/docker-promtail/workflows/Release%20to%20Docker%20Registries/badge.svg)
+[![Nightly Builds](https://github.com/flownative/docker-promtail/actions/workflows/docker.build.yaml/badge.svg)](https://github.com/flownative/docker-promtail/actions/workflows/docker.build.yaml)
 
 # Flownative Promtail Image
 
