@@ -1,12 +1,12 @@
-FROM grafana/promtail:2.4.2 as promtail
+FROM grafana/promtail:2.6.1 as promtail
 FROM europe-docker.pkg.dev/flownative/docker/base:buster
 MAINTAINER Robert Lemke <robert@flownative.com>
 
 # -----------------------------------------------------------------------------
 # Promtail
-# Latest versions: https://github.com/grafana/loki/releases
+# Latest versions: https://github.com/grafana/loki/releases / https://hub.docker.com/r/grafana/promtail/tags
 
-ENV PROMTAIL_VERSION=2.4.2
+ENV PROMTAIL_VERSION=2.6.1
 
 ENV FLOWNATIVE_LIB_PATH=/opt/flownative/lib \
     PROMTAIL_BASE_PATH=/opt/flownative/promtail \
