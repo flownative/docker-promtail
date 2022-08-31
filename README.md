@@ -25,10 +25,30 @@ controlled through environment variables.
       - PROMTAIL_LABEL_HOST=localbeach-${BEACH_PROJECT_NAME}
 ```
 
+## Testing with docker run
+
+Create a directory "test" on your local machine. Within that directory 
+create a file "test.log".
+
+Then run Promtail with `docker run`:
+
+```bash
+docker run -v $(pwd)/logs:/logs \
+  -e PROMTAIL_SCRAPE_PATH=/logs/test.log \
+  -e PROMTAIL_CLIENT_URL=https://logs-prod-us-central1.grafana.net/loki/api/v1/push \
+  -e PROMTAIL_BASIC_AUTH_USERNAME=loki-username \
+  -e PROMTAIL_BASIC_AUTH_PASSWORD=loki-password \
+  -e PROMTAIL_LABEL_JOB=test-job \ 
+  flownative/promtail
+```
+
+In a separate terminal, add test content to the log file, for example with 
+`echo "some test" >> logs/test.log`.
+
 ### Environment variables
 
 | Variable Name                | Type   | Default                                  | Description                                                         |
-| ---------------------------- | ------ | ---------------------------------------- | ------------------------------------------------------------------- |
+|------------------------------|--------|------------------------------------------|---------------------------------------------------------------------|
 | PROMTAIL_CLIENT_URL          | string | http://loki_loki_1:3100/loki/api/v1/push | URL pointing to the Loki push endpoint                              |
 | PROMTAIL_LABEL_HOST          | string | $(hostname)                              | Value of the label "host" which is added to all log entries         |
 | PROMTAIL_LABEL_JOB           | string | promtail                                 | Value of the label "job" which is added to all log entries          |
@@ -37,6 +57,7 @@ controlled through environment variables.
 | PROMTAIL_CLIENT_TENANT_ID    | string |                                          | An optional tenant id to sent as the `X-Scope-OrgID`-header         |
 | PROMTAIL_BASIC_AUTH_USERNAME | string |                                          | Username to use for basic auth, if required by Loki                 |
 | PROMTAIL_BASIC_AUTH_PASSWORD | string |                                          | Password to use for basic auth, if required by Loki                 |
+| PROMTAIL_SCRAPE_PATH         | string | /application/Data/Logs/*.log             | Path leading to log files to be scraped; supports glob syntax       |
 
 ## Security aspects
 
