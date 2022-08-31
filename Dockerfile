@@ -10,6 +10,8 @@ ENV PROMTAIL_VERSION=2.6.1
 
 ENV FLOWNATIVE_LIB_PATH=/opt/flownative/lib \
     PROMTAIL_BASE_PATH=/opt/flownative/promtail \
+    PROMTAIL_CONF_PATH=/opt/flownative/promtail/etc \
+    PROMTAIL_TMP_PATH=/opt/flownative/promtail/tmp \
     LOG_DEBUG=false
 
 USER root
