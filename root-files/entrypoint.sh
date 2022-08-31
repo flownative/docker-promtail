@@ -14,7 +14,7 @@ banner_flownative Promtail
 eval "$(promtail_env)"
 eval "$(supervisor_env)"
 
-# promtail_initialize
+promtail_initialize
 
 supervisor_initialize
 supervisor_start

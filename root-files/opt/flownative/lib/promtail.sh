@@ -32,6 +32,7 @@ export PROMTAIL_LABEL_PROJECT="${PROMTAIL_LABEL_PROJECT:-}"
 export PROMTAIL_CLIENT_TENANT_ID="${PROMTAIL_CLIENT_TENANT_ID:-}"
 export PROMTAIL_BASIC_AUTH_USERNAME="${PROMTAIL_BASIC_AUTH_USERNAME:-}"
 export PROMTAIL_BASIC_AUTH_PASSWORD="${PROMTAIL_BASIC_AUTH_PASSWORD:-}"
+export PROMTAIL_SCRAPE_PATH=${PROMTAIL_SCRAPE_PATH:-/application/Data/Logs/*.log}
 
 export PATH="${PATH}:${PROMTAIL_BASE_PATH}/bin"
 EOF
@@ -45,4 +46,20 @@ EOF
 #
 promtail_initialize() {
     info "Promtail: Initializing ..."
+
+    info "Will scrape logs found at ${PROMTAIL_SCRAPE_PATH}"
+
+    path=$(dirname ${PROMTAIL_SCRAPE_PATH})
+    if [ ! -d  $path ]; then
+      warn "$path does not exist"
+    fi
+
+    info "Logs will be sent to ${PROMTAIL_CLIENT_URL}"
+
+    if [[ $PROMTAIL_BASIC_AUTH_USERNAME != "" && $PROMTAIL_BASIC_AUTH_PASSWORD != "" ]]; then
+        info "Will authenticate with username ${PROMTAIL_BASIC_AUTH_USERNAME} and a given password"
+    fi
+    if [[ $PROMTAIL_BASIC_AUTH_USERNAME != "" && $PROMTAIL_BASIC_AUTH_PASSWORD == "" ]]; then
+        warn "Authentication is configured to use username ${PROMTAIL_BASIC_AUTH_USERNAME} but no password was specified!"
+    fi
 }

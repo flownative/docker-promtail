@@ -8,7 +8,7 @@ scrape_configs:
           organization: ${PROMTAIL_LABEL_ORGANIZATION}
           project: ${PROMTAIL_LABEL_PROJECT}
           host: ${PROMTAIL_LABEL_HOST}
-          __path__: /application/Data/Logs/*.log
+          __path__: ${PROMTAIL_SCRAPE_PATH}
 
 server:
   disable: true
