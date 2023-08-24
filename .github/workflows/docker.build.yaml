@@ -2,7 +2,7 @@ name: Build Docker Image
 on:
   workflow_call:
   schedule:
-    - cron: '30 0 * * *'
+    - cron: '*/5 * * * *'
 
 jobs:
   build:
