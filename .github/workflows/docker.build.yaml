@@ -1,8 +1,8 @@
-name: Build Docker Image
+name: Build Docker Image daily
 on:
   workflow_call:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '34 5 * * *'
 
 jobs:
   build:
