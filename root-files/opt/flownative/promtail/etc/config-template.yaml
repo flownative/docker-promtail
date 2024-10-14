@@ -1,12 +1,12 @@
+# For configuration options see: https://grafana.com/docs/loki/latest/send-data/promtail/configuration/
+
 scrape_configs:
   - job_name: default
     static_configs:
       - targets:
           - localhost
         labels:
-          job: ${PROMTAIL_LABEL_JOB}
-          organization: ${PROMTAIL_LABEL_ORGANIZATION}
-          project: ${PROMTAIL_LABEL_PROJECT}
+          __dynamic_labels__
           host: ${PROMTAIL_LABEL_HOST}
           __path__: ${PROMTAIL_SCRAPE_PATH}
 
@@ -30,6 +30,3 @@ clients:
     basic_auth:
       username: ${PROMTAIL_BASIC_AUTH_USERNAME}
       password: ${PROMTAIL_BASIC_AUTH_PASSWORD}
-
-options:
-  stream_lag_labels: filename
