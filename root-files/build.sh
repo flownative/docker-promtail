@@ -1,8 +1,12 @@
 #!/bin/bash
 
+. "${FLOWNATIVE_LIB_PATH}/packages.sh"
+
 set -o errexit
 set -o nounset
 set -o pipefail
+
+install_packages jq
 
 useradd --home-dir "${PROMTAIL_BASE_PATH}" --no-create-home --no-user-group --uid 1000 promtail
 groupadd --gid 1000 promtail
@@ -25,3 +29,7 @@ chown -R promtail:promtail \
 
 # We don't need logrotate in this image:
 rm -f /opt/flownative/supervisor/etc/conf.d/logrotate.conf
+
+rm -rf \
+    /var/cache/* \
+    /var/log/*

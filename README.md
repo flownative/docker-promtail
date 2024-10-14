@@ -4,10 +4,13 @@
 
 # Flownative Promtail Image
 
-A Docker image providing [Promtail](https://grafana.com/docs/loki/latest/clients/promtail/) for [Beach](https://www.flownative.com/beach),
-[Local Beach](https://www.flownative.com/localbeach) and other purposes. Compared to the
-official Promtail image, this one provides an opinionated configuration which can be
-controlled through environment variables.
+A Docker image
+providing [Promtail](https://grafana.com/docs/loki/latest/clients/promtail/)
+for [Beach](https://www.flownative.com/beach),
+[Local Beach](https://www.flownative.com/localbeach) and other purposes.
+Compared to the
+official Promtail image, this one provides an opinionated configuration which
+can be controlled through environment variables.
 
 ## Sending logs from Local Beach
 
@@ -21,13 +24,13 @@ controlled through environment variables.
       - ./Data/Logs:/application/Data/Logs:delegated
     environment:
       - PROMTAIL_CLIENT_URL=http://loki_loki_1:3100/loki/api/v1/push
-      - PROMTAIL_LABEL_JOB=localbeach-flow
+      - PROMTAIL_LABELS=eyJqb2IiOiAibXktam9iIiwgInNldmVyaXR5IjogImZpbmUifQ==
       - PROMTAIL_LABEL_HOST=localbeach-${BEACH_PROJECT_NAME}
 ```
 
 ## Testing with docker run
 
-Create a directory "test" on your local machine. Within that directory 
+Create a directory "test" on your local machine. Within that directory
 create a file "test.log".
 
 Then run Promtail with `docker run`:
@@ -38,26 +41,24 @@ docker run -v $(pwd)/logs:/logs \
   -e PROMTAIL_CLIENT_URL=https://logs-prod-us-central1.grafana.net/loki/api/v1/push \
   -e PROMTAIL_BASIC_AUTH_USERNAME=loki-username \
   -e PROMTAIL_BASIC_AUTH_PASSWORD=loki-password \
-  -e PROMTAIL_LABEL_JOB=test-job \ 
+  -e PROMTAIL_LABELS=eyJqb2IiOiAibXktam9iIiwgInNldmVyaXR5IjogImZpbmUifQ== \ 
   flownative/promtail
 ```
 
-In a separate terminal, add test content to the log file, for example with 
+In a separate terminal, add test content to the log file, for example with
 `echo "some test" >> logs/test.log`.
 
 ### Environment variables
 
-| Variable Name                | Type   | Default                                  | Description                                                         |
-|------------------------------|--------|------------------------------------------|---------------------------------------------------------------------|
-| PROMTAIL_CLIENT_URL          | string | http://loki_loki_1:3100/loki/api/v1/push | URL pointing to the Loki push endpoint                              |
-| PROMTAIL_LABEL_HOST          | string | $(hostname)                              | Value of the label "host" which is added to all log entries         |
-| PROMTAIL_LABEL_JOB           | string | promtail                                 | Value of the label "job" which is added to all log entries          |
-| PROMTAIL_LABEL_ORGANIZATION  | string |                                          | Value of the label "organization" which is added to all log entries |
-| PROMTAIL_LABEL_PROJECT       | string |                                          | Value of the label "project" which is added to all log entries      |
-| PROMTAIL_CLIENT_TENANT_ID    | string |                                          | An optional tenant id to sent as the `X-Scope-OrgID`-header         |
-| PROMTAIL_BASIC_AUTH_USERNAME | string |                                          | Username to use for basic auth, if required by Loki                 |
-| PROMTAIL_BASIC_AUTH_PASSWORD | string |                                          | Password to use for basic auth, if required by Loki                 |
-| PROMTAIL_SCRAPE_PATH         | string | /application/Data/Logs/*.log             | Path leading to log files to be scraped; supports glob syntax       |
+| Variable Name                | Type   | Default                                  | Description                                                                                                            |
+|------------------------------|--------|------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
+| PROMTAIL_CLIENT_URL          | string | http://loki_loki_1:3100/loki/api/v1/push | URL pointing to the Loki push endpoint                                                                                 |
+| PROMTAIL_LABEL_HOST          | string | $(hostname)                              | Value of the label "host" which is added to all log entries                                                            |
+| PROMTAIL_LABELS_BASE64       | string |                                          | Additional labels to set. Must be a BASE64-encoded JSONs string. JSON example: `{"job": "my-job", "severity": "fine"}` |
+| PROMTAIL_CLIENT_TENANT_ID    | string |                                          | An optional tenant id to sent as the `X-Scope-OrgID`-header                                                            |
+| PROMTAIL_BASIC_AUTH_USERNAME | string |                                          | Username to use for basic auth, if required by Loki                                                                    |
+| PROMTAIL_BASIC_AUTH_PASSWORD | string |                                          | Password to use for basic auth, if required by Loki                                                                    |
+| PROMTAIL_SCRAPE_PATH         | string | /application/Data/Logs/*.log             | Path leading to log files to be scraped; supports glob syntax                                                          |
 
 ## Security aspects
 
