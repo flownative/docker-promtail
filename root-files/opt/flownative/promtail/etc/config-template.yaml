@@ -8,6 +8,7 @@ scrape_configs:
         labels:
           __dynamic_labels__
           host: ${PROMTAIL_LABEL_HOST}
+          pod: ${PROMTAIL_LABEL_POD_NAME}
           __path__: ${PROMTAIL_SCRAPE_PATH}
 
 server:
