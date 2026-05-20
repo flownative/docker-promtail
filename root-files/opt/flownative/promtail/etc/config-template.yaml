@@ -3,13 +3,7 @@
 scrape_configs:
   - job_name: default
     static_configs:
-      - targets:
-          - localhost
-        labels:
-          __dynamic_labels__
-          host: ${PROMTAIL_LABEL_HOST}
-          pod: ${PROMTAIL_LABEL_POD_NAME}
-          __path__: ${PROMTAIL_SCRAPE_PATH}
+__static_configs__
 
 server:
   disable: true

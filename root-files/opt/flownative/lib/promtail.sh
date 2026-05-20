@@ -52,11 +52,24 @@ promtail_render_config() {
     # Convert JSON to YAML format for labels and add proper indentation
     labels_yaml=$(echo "$decoded_labels" | jq -r 'to_entries | map("          \(.key): \(.value|@sh)") | .[]')
 
-    # Replace placeholders in the template configuration file using awk
-    awk -v labels="$labels_yaml" '
+    # Generate one static_configs entry per comma-separated scrape path
+    static_configs_yaml=""
+    IFS=',' read -ra scrape_paths <<< "$PROMTAIL_SCRAPE_PATH"
+    for scrape_path in "${scrape_paths[@]}"; do
+        scrape_path=$(echo "$scrape_path" | xargs)
+        entry=$(printf '      - targets:\n          - localhost\n        labels:\n%s\n          host: %s\n          pod: %s\n          __path__: %s' \
+            "$labels_yaml" "$PROMTAIL_LABEL_HOST" "$PROMTAIL_LABEL_POD_NAME" "$scrape_path")
+        if [ -z "$static_configs_yaml" ]; then
+            static_configs_yaml="$entry"
+        else
+            static_configs_yaml="${static_configs_yaml}"$'\n'"${entry}"
+        fi
+    done
+
+    awk -v configs="$static_configs_yaml" '
     {
-      if ($0 ~ /__dynamic_labels__/) {
-        print labels
+      if ($0 ~ /__static_configs__/) {
+        print configs
       } else {
         print
       }
@@ -74,10 +87,14 @@ promtail_initialize() {
 
     info "Will scrape logs found at ${PROMTAIL_SCRAPE_PATH}"
 
-    path=$(dirname "${PROMTAIL_SCRAPE_PATH}")
-    if [ ! -d "$path" ]; then
-      warn "$path does not exist"
-    fi
+    IFS=',' read -ra scrape_paths <<< "$PROMTAIL_SCRAPE_PATH"
+    for scrape_path in "${scrape_paths[@]}"; do
+        scrape_path=$(echo "$scrape_path" | xargs)
+        path=$(dirname "${scrape_path}")
+        if [ ! -d "$path" ]; then
+            warn "$path does not exist"
+        fi
+    done
 
     info "Logs will be sent to ${PROMTAIL_CLIENT_URL}"
 
