@@ -58,7 +58,8 @@ In a separate terminal, add test content to the log file, for example with
 | PROMTAIL_CLIENT_TENANT_ID    | string |                                          | An optional tenant id to sent as the `X-Scope-OrgID`-header                                                            |
 | PROMTAIL_BASIC_AUTH_USERNAME | string |                                          | Username to use for basic auth, if required by Loki                                                                    |
 | PROMTAIL_BASIC_AUTH_PASSWORD | string |                                          | Password to use for basic auth, if required by Loki                                                                    |
-| PROMTAIL_SCRAPE_PATH         | string | /application/Data/Logs/*.log             | Path leading to log files to be scraped; supports glob syntax                                                          |
+| PROMTAIL_SCRAPE_PATH         | string | /application/Data/Logs/*.log             | Path(s) leading to log files to be scraped; supports glob syntax; supports comma-separated list                 |
+| PROMTAIL_LABEL_POD_NAME      | string |              | label reserved for the pod name; REQUIRED                       
 
 ## Security aspects
 
